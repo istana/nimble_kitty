@@ -97,14 +97,27 @@ defmodule NimbleKittyWeb.PageController do
 
     total_requests = Repo.one(from r in HttpRequest, select: count(r.id))
 
-    top_dogs = Repo.all(from r in people_query,
-      select: %{
-        url: r.url,
-        visits: count(r.id),
-      },
-      group_by: r.url,
-      order_by: [desc: count(r.id)]
-    )
+    top_dogs =
+      Repo.all(
+        from r in people_query,
+          select: %{
+            url: r.url,
+            visits: count(r.id)
+          },
+          group_by: r.url,
+          order_by: [desc: count(r.id)]
+      )
+
+    top_referrers =
+      Repo.all(
+        from r in people_query,
+          select: %{
+            referrer: r.referrer,
+            visits: count(r.id)
+          },
+          group_by: r.referrer,
+          order_by: [desc: count(r.id)]
+      )
 
     render(conn, "index.html",
       last24h_people: last24h_people,
@@ -121,6 +134,7 @@ defmodule NimbleKittyWeb.PageController do
       all_bots: all_bots,
       total_requests: total_requests,
       top_dogs: top_dogs,
+      top_referrers: top_referrers
     )
   end
 end

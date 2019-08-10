@@ -18,3 +18,10 @@
     <div class="top-dog"><%= request.url %> | <%= request.visits %></div>
   <% end %>
 </div>
+
+<div>
+  <h2>Top Referrers</h2>
+  <%= for request <- @top_referrers do %>
+    <div class="top-dog"><%= request.referrer %> | <%= request.visits %></div>
+  <% end %>
+</div>
