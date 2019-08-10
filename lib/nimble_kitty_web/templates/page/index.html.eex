@@ -1,1 +1,13 @@
-Total requests: <%= @total_requests %>
+<div>
+  Total requests: <%= @total_requests %>
+</div>
+
+<div>
+  <h2>Accesses</h2>
+  24h: <%= @last24h %><br />
+  48h: <%= @last48h %><br />
+  7d: <%= @last7d %><br />
+  30d: <%= @last30d %><br />
+  1y: <%= @last1y %><br />
+  all: <%= @all %>
+</div>
