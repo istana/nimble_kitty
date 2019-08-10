@@ -11,3 +11,10 @@
   1y: <%= @last1y_people %>/<%= @last1y_bots %><br />
   all: <%= @all_people %>/<%= @all_bots %>
 </div>
+
+<div>
+  <h2>Top Dogs</h2>
+  <%= for request <- @top_dogs do %>
+    <div class="top-dog"><%= request.url %> | <%= request.visits %></div>
+  <% end %>
+</div>
