@@ -1,6 +1,6 @@
 defmodule Mix.Tasks.Import.AccessLogs do
   use Mix.Task
-  import Ecto.Query, warn: false
+  import Ecto.Query
   alias NimbleKitty.HttpRequest
   alias NimbleKitty.Repo
 
@@ -55,7 +55,8 @@ defmodule Mix.Tasks.Import.AccessLogs do
           and r.user_agent == ^Map.get(changeset.changes, :user_agent)
           and r.referrer == ^Map.get(changeset.changes, :referrer),
       limit: 1
-    already_exists? = Repo.all(dedup_query)
+    already_exists? = Repo.one(dedup_query)
+    IO.inspect(already_exists?)
 
     if !already_exists? do
       changeset
