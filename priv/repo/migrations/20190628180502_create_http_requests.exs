@@ -15,6 +15,5 @@ defmodule NimbleKitty.Repo.Migrations.CreateHttpRequests do
 
       timestamps()
     end
-
   end
 end

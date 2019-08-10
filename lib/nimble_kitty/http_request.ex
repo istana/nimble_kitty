@@ -19,7 +19,17 @@ defmodule NimbleKitty.HttpRequest do
   @doc false
   def changeset(http_request, attrs) do
     http_request
-    |> cast(attrs, [:ip_address, :time, :verb, :url, :version, :status, :response_size, :user_agent, :referrer])
+    |> cast(attrs, [
+      :ip_address,
+      :time,
+      :verb,
+      :url,
+      :version,
+      :status,
+      :response_size,
+      :user_agent,
+      :referrer
+    ])
     |> validate_required([:ip_address, :time, :status])
   end
 end

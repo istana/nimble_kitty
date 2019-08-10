@@ -3,11 +3,11 @@
 </div>
 
 <div>
-  <h2>Accesses</h2>
-  24h: <%= @last24h %><br />
-  48h: <%= @last48h %><br />
-  7d: <%= @last7d %><br />
-  30d: <%= @last30d %><br />
-  1y: <%= @last1y %><br />
-  all: <%= @all %>
+  <h2>Accesses (people+undetected/bots)</h2>
+  24h: <%= @last24h_people %>/<%= @last24h_bots %><br />
+  48h: <%= @last48h_people %>/<%= @last48h_bots %><br />
+  7d: <%= @last7d_people %>/<%= @last7d_bots %><br />
+  30d: <%= @last30d_people %>/<%= @last30d_bots %><br />
+  1y: <%= @last1y_people %>/<%= @last1y_bots %><br />
+  all: <%= @all_people %>/<%= @all_bots %>
 </div>
