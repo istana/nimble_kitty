@@ -30,13 +30,13 @@ defmodule Mix.Tasks.Import.AccessLogs do
     attrs = %{
       ip_address: combined["host"],
       time: time,
-      verb: request["verb"] || "-",
-      url: request["path"] || "-",
-      version: request["version"] || "-",
+      verb: request["verb"],
+      url: request["path"],
+      version: request["version"],
       status: combined["statuscode"],
       response_size: (if combined["bytes"] == "-", do: -1, else: combined["bytes"]),
-      user_agent: combined["useragent"],
-      referrer: combined["referrer"] || "-"
+      user_agent: (if combined["user_agent"] == "-", do: nil, else: combined["user_agent"]),
+      referrer: (if combined["referrer"] == "-", do: nil, else: combined["referrer"])
     }
 
     changeset = %HttpRequest{}
@@ -45,15 +45,15 @@ defmodule Mix.Tasks.Import.AccessLogs do
     IO.inspect(changeset)
     dedup_query = from r in HttpRequest,
       where:
-        r.ip_address == ^changeset.changes.ip_address
-          and r.time == ^changeset.changes.time
-          and r.verb == ^changeset.changes.verb
-          and r.url == ^changeset.changes.url
-          and r.version == ^changeset.changes.version
-          and r.status == ^changeset.changes.status
-          and r.response_size == ^changeset.changes.response_size
-          and r.user_agent == ^changeset.changes.user_agent
-          and r.referrer == ^changeset.changes.referrer,
+        r.ip_address == ^Map.get(changeset.changes, :ip_address)
+          and r.time == ^Map.get(changeset.changes, :time)
+          and r.verb == ^Map.get(changeset.changes, :verb)
+          and r.url == ^Map.get(changeset.changes, :url)
+          and r.version == ^Map.get(changeset.changes, :version)
+          and r.status == ^Map.get(changeset.changes, :status)
+          and r.response_size == ^Map.get(changeset.changes, :response_size)
+          and r.user_agent == ^Map.get(changeset.changes, :user_agent)
+          and r.referrer == ^Map.get(changeset.changes, :referrer),
       limit: 1
     already_exists? = Repo.all(dedup_query)
 
