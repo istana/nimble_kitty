@@ -19,7 +19,7 @@ defmodule Mix.Tasks.Import.AccessLogs do
     File.stream!(path, [:utf8, :read])
     |> Stream.map(fn line ->
       Regex.named_captures(
-        ~r/(?<host>.+?) (?<ident>.+?) (?<username>.+?) \[(?<datetime>.+?)\] "(?<request>.+?)" (?<statuscode>.+?) (?<bytes>.+?) "(?<referrer>.+?)" "(?<useragent>.+?)"/,
+        ~r/\A(?<host>.+?) (?<ident>.+?) (?<username>.+?) \[(?<datetime>.+?)\] "(?<request>.+?)" (?<statuscode>.+?) (?<bytes>.+?) "(?<referrer>.+?)" "(?<useragent>.+?)"/,
         line
       )
     end)
@@ -40,7 +40,7 @@ defmodule Mix.Tasks.Import.AccessLogs do
       version: request["version"],
       status: combined["statuscode"],
       response_size: if(combined["bytes"] == "-", do: -1, else: combined["bytes"]),
-      user_agent: if(combined["user_agent"] == "-", do: nil, else: combined["user_agent"]),
+      user_agent: if(combined["useragent"] == "-", do: nil, else: combined["useragent"]),
       referrer: if(combined["referrer"] == "-", do: nil, else: combined["referrer"])
     }
 
